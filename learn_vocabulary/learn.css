@@ -1,0 +1,11 @@
+.pagination > li > a{
+    font-size: 20px;
+    padding:0 40px 0 40px;
+}
+
+.table-responsive {
+    max-height: 468px;
+    overflow-y: auto;
+    scrollbar-width: thin; /* Chế độ thanh cuộn mảnh */
+    scrollbar-color: #97bee9 #f1f1f1; /* Màu của thanh cuộn */
+}

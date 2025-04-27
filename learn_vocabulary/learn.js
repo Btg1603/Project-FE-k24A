@@ -1,26 +1,24 @@
 // const wordList = [
-//     { word: "abate", meaning: "to reduce in amount, degree, or intensity", category: "Verb", example: "The storm abated after a few hours." },
-//     { word: "benevolent", meaning: "well-meaning and kindly", category: "Adjective", example: "She was a benevolent ruler who cared for her people." },
-//     { word: "candid", meaning: "truthful and straightforward", category: "Adjective", example: "He gave a candid account of the incident." },
-//     { word: "deferential", meaning: "showing respect and esteem due to a superior or elder", category: "Adjective", example: "He was deferential to his elders." },
-//     { word: "ebullient", meaning: "cheerful and full of energy", category: "Adjective", example: "Her ebullient personality made her the life of the party." },
-//     { word: "facilitate", meaning: "to make an action or process easier", category: "Verb", example: "The new software will facilitate the workflow." },
-//     { word: "gregarious", meaning: "fond of company; sociable", category: "Adjective", example: "He was a gregarious person who loved to be around others." },
-//     { word: "harangue", meaning: "a lengthy and aggressive speech", category: "Noun", example: "The politician delivered a harangue about the state of the economy." },
-//     { word: "ineffable", meaning: "too great or extreme to be expressed in words", category: "Adjective", example: "The beauty of the sunset was ineffable." },
-//     { word: "juxtapose", meaning: "to place or deal with close together for contrasting effect", category: "Verb", example: "The artist juxtaposed light and dark colors in her painting." },
-//     { word: "kaleidoscope", meaning: "a constantly changing pattern or sequence of elements", category: "Noun", example: "The city was a kaleidoscope of cultures and traditions." },
-//     { word: "languid", meaning: "displaying or having a disinclination for physical exertion or effort", category: "Adjective", example: "She felt languid after the long day." },
-//     { word: "meticulous", meaning: "showing great attention to detail; very careful and precise", category: "Adjective", example: "He was meticulous in his work, ensuring everything was perfect." },
+//     { word: "tree", meaning: "a perennial plant with an elongated stem, or trunk", category: "Cây cối", example: "The tree provided shade on a hot day." },
+//     { word: "river", meaning: "a large natural stream of water flowing in a channel to the sea, a lake, or another river", category: "Thiên nhiên", example: "The river flows through the valley." },
+//     { word: "lion", meaning: "a large tawny-colored cat that lives in prides, found in Africa and northwestern India", category: "Con vật", example: "The lion is known as the king of the jungle." },
+//     { word: "car", meaning: "a road vehicle, typically with four wheels, powered by an internal combustion engine", category: "Phương tiện", example: "He drove his car to work every day." },
+//     { word: "flower", meaning: "the seed-bearing part of a plant, consisting of reproductive organs", category: "Cây cối", example: "The flower bloomed beautifully in the garden." },
+//     { word: "mountain", meaning: "a large natural elevation of the earth's surface rising abruptly from the surrounding level", category: "Thiên nhiên", example: "They climbed the mountain during their vacation." },
+//     { word: "elephant", meaning: "a large herbivorous mammal with a trunk, native to Africa and Asia", category: "Con vật", example: "The elephant used its trunk to grab the fruit." },
+//     { word: "bicycle", meaning: "a vehicle composed of two wheels held in a frame one behind the other, propelled by pedals", category: "Phương tiện", example: "She rode her bicycle to the park." },
+//     { word: "bush", meaning: "a shrub or clump of shrubs with stems of moderate length", category: "Cây cối", example: "The bush was full of berries." },
+//     { word: "ocean", meaning: "a very large expanse of sea", category: "Thiên nhiên", example: "The ocean stretched as far as the eye could see." },
+//     { word: "dog", meaning: "a domesticated carnivorous mammal that typically has a long snout and an acute sense of smell", category: "Con vật", example: "The dog barked loudly at the stranger." },
+//     { word: "train", meaning: "a series of connected vehicles that run on a track and are designed to transport people or goods", category: "Phương tiện", example: "The train arrived at the station on time." },
 // ];
 
 // // lưu wordList lên local
 // window.localStorage.setItem('wordList', JSON.stringify(wordList));
 
-// lấy dữ liệu từ local
+// Lấy dữ liệu từ local
 let wordList = JSON.parse(localStorage.getItem('wordList')) || [];
 const wordContainer = document.querySelector("tbody");
-
 
 function render(data) {
     wordContainer.innerHTML = "";
@@ -39,9 +37,7 @@ function render(data) {
     });
 }
 
-
-
-
+render(wordList);
 
 function removeWord(index) {
     if (confirm("Are you sure you want to delete this word?")) {
@@ -64,7 +60,7 @@ function addWord(event) {
         wordList.push(newWord);
         window.localStorage.setItem('wordList', JSON.stringify(wordList));
         form.reset();
-        render();
+        render(wordList);
 
         document.querySelector('#staticBackdrop .btn-close').click();
         alert("Added successfully");
@@ -75,7 +71,7 @@ function addWord(event) {
     }
 }   
 
-render(wordList);
+
 
 // function editWord(index) {
 //     const wordObj = wordList[index];
@@ -97,89 +93,47 @@ render(wordList);
 //     `;   
 // }
 
-// Edit Word Function
 function editWord(index) {
     const wordObj = wordList[index];
 
-    // Set the form values in the modal
+
     document.getElementById("wordEdit").value = wordObj.word;
     document.getElementById("meaningEdit").value = wordObj.meaning;
     document.getElementById("categoryEdit").value = wordObj.category;
 
-    // Show the modal
+    // hiện modal sửa
     const editModal = new bootstrap.Modal(document.getElementById("editModal"));
     editModal.show();
 
-    // Handle save changes
+    // tạo sự kiện cho nút lưu trong modal
     document.getElementById("saveChanges").onclick = function () {
         saveWord(index);
-        editModal.hide(); // Close modal after saving
+        editModal.hide(); 
     };
 }
 
 
-// Save Word Function (After Editing)
+
 function saveWord(index) {
     const word = document.getElementById("wordEdit").value.trim();
     const meaning = document.getElementById("meaningEdit").value.trim();
     const category = document.getElementById("categoryEdit").value.trim();
 
     if (word && meaning) {
-        wordList[index] = { word, meaning, category }; // Update word list
-        localStorage.setItem('wordList', JSON.stringify(wordList)); // Save to localStorage
-        render(wordList); // Re-render the list
+        wordList[index] = { word, meaning, category }; 
+        localStorage.setItem('wordList', JSON.stringify(wordList));
+        render(wordList); 
         alert("Word updated successfully.");
     } else {
         alert("Please fill in all fields.");
     }
 }
 
-  
 
-function saveWord(index) {
-    const word=document.getElementById("wordEdit").value;
-    const meaning=document.getElementById("meaningEdit").value;
-    const category=document.getElementById("categoryEdit").value;
-
-    if (word && meaning) {
-        wordList[index] = {
-            word: word,
-            meaning: meaning,
-            category: category
-        };
-        window.localStorage.setItem('wordList', JSON.stringify(wordList));
-        render(wordList);
-        alert("Updated successfully");
-    } else {
-        alert("Please fill in the required fields.");
-    }   
-}
-
-// function searchWord(){
-//     const searchInput = document.getElementById("searchInput").value.toLowerCase();
-//     const filteredWords = wordList.filter(wordObj => 
-//         wordObj.word.toLowerCase().includes(searchInput) || 
-//         wordObj.meaning.toLowerCase().includes(searchInput)
-//     );
-//     wordContainer.innerHTML = "";
-//     filteredWords.forEach((wordObj, index) => {
-//         const wordRow = document.createElement("tr");
-//         wordRow.innerHTML = `
-//             <td>${wordObj.word}</td>
-//             <td>${wordObj.meaning}</td>
-//             <td>${wordObj.category || ''}</td>
-//             <td class="text-center">
-//                 <button id="edit" class="btn btn-primary btn-sm" onclick="editWord(${index})">Edit</button>
-//                 <button class="btn btn-danger btn-sm" onclick="removeWord(${index})">Delete</button>
-//             </td>
-//         `;
-//         wordContainer.appendChild(wordRow);
-//     });
-// }
-
-
-document.querySelector("#searchInput").addEventListener("input", function () {
-    const keyword = this.value.toLowerCase().trim();
+// tìm kiếm
+const searchInput = document.querySelector("#searchInput");
+searchInput.addEventListener("input", () => {
+    const keyword = searchInput.value.toLowerCase().trim();
     const filteredWord = wordList.filter(wordObj => {
         return wordObj.word.toLowerCase().includes(keyword) ||
                wordObj.meaning.toLowerCase().includes(keyword) ||
@@ -188,39 +142,146 @@ document.querySelector("#searchInput").addEventListener("input", function () {
     render(filteredWord);
 });
 
-
-// lọc danh mục
-// Lắng nghe sự kiện thay đổi tìm kiếm và lọc danh mục
-const searchInput = document.getElementById("searchInput");
-const categorySelect = document.getElementById("categorySelect");
-
-searchInput.addEventListener("input", filterWords);
-categorySelect.addEventListener("change", filterWords);
-
-
-
+// lọc theo danh mục
+const category=document.querySelector("#categorySelect")
+category.addEventListener("change", () => {
+    const selectedCategory = category.value;
+    const filteredWord = wordList.filter(wordObj => {
+        return selectedCategory === "All Categories" || wordObj.category === selectedCategory;
+    });
+    render(filteredWord);
+});
 
 
 
-function render(filteredData) {
+
+
+
+
+const pagination = document.querySelector(".pagination");
+const itemsPerPage = 5;
+let currentPage = 1;
+let totalPages = 1;
+
+function renderPage(data, page = 1) {
     wordContainer.innerHTML = "";
+    totalPages = Math.ceil(data.length / itemsPerPage);
+    const start = (page - 1) * itemsPerPage;
+    const end = start + itemsPerPage;
+    const currentData = data.slice(start, end);
 
-    filteredData.forEach((wordObj, index) => {
+    currentData.forEach((wordObj, index) => {
         const wordRow = document.createElement("tr");
         wordRow.innerHTML = `
             <td>${wordObj.word}</td>
             <td>${wordObj.meaning}</td>
             <td>${wordObj.category || ''}</td>
             <td class="text-center">
-                <button class="btn btn-primary btn-sm" onclick="editWord(${index})">Edit</button>
-                <button class="btn btn-danger btn-sm" onclick="removeWord(${index})">Delete</button>
+                <button class="btn btn-primary btn-sm" onclick="editWord(${start + index})">Edit</button>
+                <button class="btn btn-danger btn-sm" onclick="removeWord(${start + index})">Delete</button>
             </td>
         `;
         wordContainer.appendChild(wordRow);
     });
+
+    updatePaginationControls();
+}
+
+renderPage(wordList, currentPage);
+
+
+function updatePaginationControls() {
+    pagination.innerHTML = "";
+
+    // Previous
+    pagination.innerHTML += `
+        <li class="page-item ${currentPage === 1 ? 'disabled' : ''}">
+            <a class="page-link" href="#" onclick="changePage(${currentPage - 1})">Previous</a>
+        </li>
+    `;
+
+    // Page numbers
+    for (let i = 1; i <= totalPages; i++) {
+        pagination.innerHTML += `
+            <li class="page-item ${currentPage === i ? 'active' : ''}">
+                <a class="page-link" href="#" onclick="changePage(${i})">${i}</a>
+            </li>
+        `;
+    }
+
+    // Next
+    pagination.innerHTML += `
+        <li class="page-item ${currentPage === totalPages ? 'disabled' : ''}">
+            <a class="page-link" href="#" onclick="changePage(${currentPage + 1})">Next</a>
+        </li>
+    `;
+}
+
+function changePage(page) {
+    if (page >= 1 && page <= totalPages) {
+        currentPage = page;
+        renderPage(wordList, currentPage);
+    }
 }
 
 
 
 
 
+// function updatePaginationControls() {
+//     pagination.innerHTML = "";
+
+//     // Previous
+//     pagination.innerHTML += `
+//         <li class="page-item ${currentPage === 1 ? 'disabled' : ''}">
+//             <a class="page-link" href="#" onclick="changePage(${currentPage - 1})">Previous</a>
+//         </li>
+//     `;
+
+//     const maxVisiblePages = 4;
+
+//     // Tính phạm vi hiển thị
+//     let startPage = Math.max(1, currentPage - 1);
+//     let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+
+//     // Nếu endPage tới cuối rồi thì lùi startPage lại
+//     if (endPage - startPage < maxVisiblePages - 1) {
+//         startPage = Math.max(1, endPage - maxVisiblePages + 1);
+//     }
+
+//     // Dấu ... trước
+//     if (startPage > 1) {
+//         pagination.innerHTML += `
+//             <li class="page-item">
+//                 <a class="page-link" href="#" onclick="changePage(1)">1</a>
+//             </li>
+//             <li class="page-item disabled"><span class="page-link">...</span></li>
+//         `;
+//     }
+
+//     // Các trang hiện tại
+//     for (let i = startPage; i <= endPage; i++) {
+//         pagination.innerHTML += `
+//             <li class="page-item ${currentPage === i ? 'active' : ''}">
+//                 <a class="page-link" href="#" onclick="changePage(${i})">${i}</a>
+//             </li>
+//         `;
+//     }
+
+//     // Dấu ... sau
+//     if (endPage < totalPages) {
+//         pagination.innerHTML += `
+//             <li class="page-item disabled"><span class="page-link">...</span></li>
+//             <li class="page-item">
+//                 <a class="page-link" href="#" onclick="changePage(${totalPages})">${totalPages}</a>
+//             </li>
+//         `;
+//     }
+
+//     // Next
+//     pagination.innerHTML += `
+//         <li class="page-item ${currentPage === totalPages ? 'disabled' : ''}">
+//             <a class="page-link" href="#" onclick="changePage(${currentPage + 1})">Next</a>
+//         </li>
+//     `;
+// }
