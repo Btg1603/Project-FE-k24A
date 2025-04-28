@@ -16,10 +16,7 @@ logoutButton.addEventListener('click', function () {
 
 
 
-  // // Hiện nút logout nếu đang login
-  // if (authMode === 'login') {
-  //   logoutButton.classList.remove('d-none');
-  // }
+
 
   // Xử lý đăng xuất
   logoutButton.addEventListener('click', function () {
@@ -43,4 +40,13 @@ logoutButton.addEventListener('click', function () {
       }
     });
   });
+
+
+// khi login thành công thì khi nhấn get started chuyển qua trang vocabulary
+const start = document.getElementById('start');
+if (authMode === 'login') {
+  start.href= '/learn_vocabulary/';
+}else if(authMode === 'logout'){
+  start.href= '/authen_login_logout/';
+}
 

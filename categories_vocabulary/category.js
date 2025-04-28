@@ -3,10 +3,14 @@ const wordContainer = document.querySelector('tbody');
 const wordList = JSON.parse(localStorage.getItem('wordList')) || [];
 const categoryList = JSON.parse(localStorage.getItem('categoryList')) || [];
 wordList.forEach(word => {
-    if (!categoryList.includes(word.category)) {
-        categoryList.push(word.category);
+    if (!categoryList.some(words => words.name === word.category)) {
+        categoryList.push({
+            name: word.category,
+            description: ""
+        });
     }
 });
+console.log(categoryList);
 
 //lưu lên local
 localStorage.setItem('categoryList', JSON.stringify(categoryList));
@@ -14,28 +18,23 @@ localStorage.setItem('categoryList', JSON.stringify(categoryList));
 
 
 // Hàm render categoryList
-function renderCategories() {
+function renderCategories(categoryList) {
     wordContainer.innerHTML = "";  // Clear table before re-render
 
     categoryList.forEach((category, index) => {
-        // Lọc các từ có category tương ứng
-        const categoryWords = wordList.filter(word => word.category === category);
-        
-        // Tạo một dòng mới cho mỗi category
         const row = document.createElement('tr');
-        row.className = 'word-item';
         row.innerHTML = `
-            <td>${category}</td>
-            <td>${categoryWords.map(word => word.description).join(', ')}</td> 
-            <td class="text-center">
-                <button class="btn btn-primary btn-sm" onclick="editCategory(${index})">Edit</button>
-                <button class="btn btn-danger btn-sm" onclick="removeCategory(${index})">Delete</button>
-            </td>
+        <td>${category.name}</td>
+        <td>${category.description}</td>
+        <td>
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModal" onclick="editCategory(${index})">Edit</button>
+            <button class="btn btn-danger" onclick="removeCategory(${index})">Delete</button>
+        </td>
         `;
         wordContainer.appendChild(row);
     });
 }
-renderCategories();
+renderCategories(categoryList);
 
 
 
@@ -49,50 +48,202 @@ function addCategory(event) {
     const newDescription = form.description.value.trim();
 
     if (newCategory && newDescription) {
-        if (!categoryList.includes(newCategory)) {
-            wordList.push({ category: newCategory, description: newDescription });
-            categoryList.push(newCategory);
+        if (!categoryList.some(category => category.name === newCategory)) {
+            // wordList.push({ name: newCategory, description: newDescription });
+            categoryList.push({ name: newCategory, description: newDescription });
 
-           
+
             // localStorage.setItem('wordList', JSON.stringify(wordList));
             localStorage.setItem('categoryList', JSON.stringify(categoryList));
 
-         
-            form.reset();
-            renderCategories();
 
-           
+            form.reset();
+            renderCategories(categoryList);
+
+
             document.querySelector('#staticBackdrop .btn-close').click();
-            alert("Category added successfully");
+            showNotification("Category added successfully");
+
         } else {
-            alert("This category already exists.");
+            showNotification("This category already exists.");
+
         }
     } else {
-        alert("Please fill in all the required fields.");
+        showNotification("Please fill in all the required fields.");
+
     }
 }
 
 
 
-renderCategories();
+
+renderCategories(categoryList);
+
+function showNotification(message) {
+    const notificationModal = new bootstrap.Modal(document.getElementById('notificationModal'));
+    const notificationBody = document.getElementById('notificationModalBody');
+    notificationBody.textContent = message;
+    notificationModal.show();
+}
+
 
 
 function removeCategory(index) {
-    const confirmDelete = confirm('Are you sure you want to delete this category?');
-    if (confirmDelete) {
-        const categoryToRemove = categoryList[index];
+    const confirmModal = new bootstrap.Modal(document.getElementById('confirmDeleteModal'));
+    confirmModal.show();
 
-        // Xóa trong wordList
-        // const newWordList = wordList.filter(word => word.category !== categoryToRemove);
-        // localStorage.setItem('wordList', JSON.stringify(newWordList));
-
-        // Xóa trong categoryList
+    document.getElementById('confirmDeleteBtn').onclick = () => {
         categoryList.splice(index, 1);
         localStorage.setItem('categoryList', JSON.stringify(categoryList));
-        renderCategories();
+        renderCategories(categoryList);
+        confirmModal.hide();
+
+        showNotification("Category deleted successfully");
+    };
+}
+
+const searchInput = document.querySelector("#searchInput");
+searchInput.addEventListener("input", () => {
+    const keyword = searchInput.value.toLowerCase().trim();
+    const filteredCategories = categoryList.filter(category => {
+        return category.name.toLowerCase().includes(keyword) ||
+               category.description.toLowerCase().includes(keyword);
+    });
+    renderCategories(filteredCategories);
+});
+
+
+
+
+const pagination = document.querySelector(".pagination");
+const itemsPerPage = 2;
+let currentPage = 1;
+let totalPages = 1;
+
+function renderPage(data, page = 1) {
+    wordContainer.innerHTML = "";
+    totalPages = Math.ceil(data.length / itemsPerPage);
+    const start = (page - 1) * itemsPerPage;
+    const end = start + itemsPerPage;
+    const currentData = data.slice(start, end);
+
+    currentData.forEach((categoryObj, index) => {
+        const categoryRow = document.createElement("tr");
+        categoryRow.innerHTML = `
+            <td>${categoryObj.name}</td>
+            <td>${categoryObj.description}</td>
+            <td>
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModal" onclick="editCategory(${start + index})">Edit</button>
+                <button class="btn btn-danger" onclick="removeCategory(${start + index})">Delete</button>
+            </td>
+        `;
+        wordContainer.appendChild(categoryRow);
+    });
+
+    updatePaginationControls();
+}
+
+renderPage(categoryList, currentPage);
+
+function updatePaginationControls() {
+    pagination.innerHTML = "";
+
+    // Previous
+    pagination.innerHTML += `
+        <li class="page-item ${currentPage === 1 ? 'disabled' : ''}">
+            <a class="page-link" href="#" onclick="changePage(${currentPage - 1})">Previous</a>
+        </li>
+    `;
+
+    // Page numbers
+    for (let i = 1; i <= totalPages; i++) {
+        pagination.innerHTML += `
+            <li class="page-item ${currentPage === i ? 'active' : ''}">
+                <a class="page-link" href="#" onclick="changePage(${i})">${i}</a>
+            </li>
+        `;
+    }
+
+    // Next
+    pagination.innerHTML += `
+        <li class="page-item ${currentPage === totalPages ? 'disabled' : ''}">
+            <a class="page-link" href="#" onclick="changePage(${currentPage + 1})">Next</a>
+        </li>
+    `;
+}
+
+function changePage(page) {
+    if (page >= 1 && page <= totalPages) {
+        currentPage = page;
+        renderPage(categoryList, currentPage);
     }
 }
 
+
+
+
+
+
+function editCategory(index) {
+    const category = categoryList[index];
+    const editForm = document.getElementById('editForm');
+
+    if (!editForm) {
+        console.error("Edit form not found");
+        return;
+    }
+
+    const nameInput = document.getElementById('categoryEdit');
+    const descriptionInput = document.getElementById('descriptionEdit');
+
+    if (!nameInput || !descriptionInput) {
+        console.error("Edit form fields not found");
+        return;
+    }
+
+    nameInput.value = category?.name || '';
+    descriptionInput.value = category?.description || '';
+
+    editForm.dataset.index = index; // Save index to dataset
+}
+
+
+function saveEdit(event) {
+    event.preventDefault();
+    const form = event.target;
+    const index = form.dataset.index;
+
+    if (index === undefined || index === null) {
+        alert("Error: Unable to identify the category to edit.");
+        return;
+    }
+
+    const nameInput = document.getElementById('categoryEdit');
+    const descriptionInput = document.getElementById('descriptionEdit');
+
+    const updatedName = nameInput.value.trim();
+    const updatedDescription = descriptionInput.value.trim();
+
+    if (updatedName && updatedDescription) {
+        categoryList[index].name = updatedName;
+        categoryList[index].description = updatedDescription;
+
+        localStorage.setItem('categoryList', JSON.stringify(categoryList));
+        renderCategories(categoryList);
+
+        const closeButton = document.querySelector('#editModal .btn-close');
+        if (closeButton) {
+            closeButton.click();
+        }
+
+        form.reset();
+        showNotification("Category updated successfully");
+
+    } else {
+        showNotification("Error: Unable to identify the category to edit.");
+
+    }
+}
 
 
 

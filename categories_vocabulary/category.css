@@ -83,6 +83,15 @@ body {
     flex: 1;
 }
 
-.footer {
-    background-color: #f8f9fa;
+body {
+    background-image: url(../picture/backiee-261161.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
+
+
+table{
+    text-align: center;
 }

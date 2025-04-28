@@ -131,3 +131,5 @@ function setupTogglePassword(inputId, toggleId) {
 setupTogglePassword("password", "togglePassword1");
 setupTogglePassword("confirmPassword", "togglePassword2");
 setupTogglePassword("loginPassword", "togglePassword3");
+
+

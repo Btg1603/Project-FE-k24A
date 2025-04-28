@@ -9,3 +9,87 @@
     scrollbar-width: thin; /* Chế độ thanh cuộn mảnh */
     scrollbar-color: #97bee9 #f1f1f1; /* Màu của thanh cuộn */
 }
+
+
+
+body{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f9fa;
+}
+.thead {
+    background-color: #f8f9fa;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.navbar {
+    padding: 10px 20px;
+}
+
+.navbar-brand img {
+    height: 50px;
+    width: auto;
+    display: block;
+}
+
+.navbar-brand {
+    margin-right: auto;
+    padding: 0;
+}
+
+.menu {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+.menu a {
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 16px;
+    color:black;
+    border:none;
+}
+
+.menu a:hover {
+    background-color: #5196ff;
+    color: #fff;
+}
+
+.footer {
+    background-color: white;
+    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
+    color: #888;
+    font-size: 0.9rem;
+}
+
+body {
+    background-image: url(../picture/backiee-131723.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+  html, body {
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.container {
+    flex: 1;
+}
+.footer {
+    background-color: white;
+    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
+    color: #888;
+    font-size: 0.9rem;
+}

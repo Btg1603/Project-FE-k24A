@@ -114,3 +114,13 @@ body {
 .footer {
     background-color: #f8f9fa;
 }
+
+
+ /* ảnh nền */
+
+body {
+  background-image: url(../picture/backiee-108575.jpg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}

@@ -39,12 +39,27 @@ function render(data) {
 
 render(wordList);
 
+function showNotification(message) {
+    const notificationModal=new bootstrap.Modal(document.getElementById('notificationModal'));
+    const notificationBody=document.getElementById('notificationModalBody');
+    notificationBody.textContent=message;
+    notificationModal.show();
+}
+
+
 function removeWord(index) {
-    if (confirm("Are you sure you want to delete this word?")) {
-        wordList.splice(index, 1);
-        window.localStorage.setItem('wordList', JSON.stringify(wordList));
+    const confirmModal=new bootstrap.Modal(document.getElementById("confirmDeleteModal"));
+    confirmModal.show();
+
+    document.getElementById('confirmDeleteBtn').onclick=()=>{
+        wordList.splice(index,1);
+        localStorage.setItem('wordList',JSON.stringify(wordList));
         render(wordList);
+        confirmModal.hide();
+
+        showNotification("Deleted successfully");
     }
+    
 }
 
 
@@ -63,11 +78,11 @@ function addWord(event) {
         render(wordList);
 
         document.querySelector('#staticBackdrop .btn-close').click();
-        alert("Added successfully");
+        showNotification("Added successfully");
 
 
     } else {
-        alert("Please fill in the required fields.");
+        showNotification("Please fill in the required fields.");
     }
 }   
 
@@ -123,9 +138,9 @@ function saveWord(index) {
         wordList[index] = { word, meaning, category }; 
         localStorage.setItem('wordList', JSON.stringify(wordList));
         render(wordList); 
-        alert("Word updated successfully.");
+        showNotification("Word updated successfully.");
     } else {
-        alert("Please fill in all fields.");
+        showNotification("Please fill in all fields.");
     }
 }
 
