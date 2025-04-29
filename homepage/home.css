@@ -3,9 +3,11 @@
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
+
 .navbar {
     padding: 10px 20px;
 }
+
 
 .navbar-brand img {
     height: 50px;
@@ -17,6 +19,10 @@
     margin-right: auto;
     padding: 0;
 }
+
+
+
+
 
 .menu {
     display: flex;
@@ -123,4 +129,83 @@ body {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+}
+
+
+
+
+
+
+/* ===== Base Styles (áp dụng mọi thiết bị) ===== */
+.menu {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: nowrap;       
+  overflow-x: auto;    
+  white-space: nowrap;     
+  -webkit-overflow-scrolling: touch;
+}
+
+.menu::-webkit-scrollbar {
+  display: none;
+}
+
+.menu a {
+  font-size: 1rem;
+  margin-right: 10px;
+  text-decoration: none;
+  white-space: nowrap;      
+}
+
+/* ===== Desktop (≥1195px) ===== */
+@media (min-width: 1195px) {
+  .title h1 {
+    font-size: 3rem;
+  }
+
+  .title p {
+    font-size: 1.25rem;
+  }
+}
+
+/* ===== Tablet (834px - 1194px) ===== */
+@media (max-width: 1194px) and (min-width: 834px) {
+  .title h1 {
+    font-size: 2.2rem;
+  }
+
+  .title p {
+    font-size: 1rem;
+  }
+}
+
+/* ===== Mobile (≤833px) ===== */
+@media (max-width: 833px) {
+  .title h1 {
+    font-size: 1.8rem;
+    text-align: center;
+  }
+  .title p {
+    font-size: 0.95rem;
+    text-align: center;
+  }
+
+  .menu a {
+    font-size: 0.95rem;
+  }
+  .menu {
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    white-space: nowrap;
+    gap: 0px;
+}
+
+.menu .btn {
+    padding: 1px 1px;  
+    font-size: 0.9rem;  
+}
+
 }

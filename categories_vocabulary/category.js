@@ -116,7 +116,7 @@ searchInput.addEventListener("input", () => {
 
 
 const pagination = document.querySelector(".pagination");
-const itemsPerPage = 2;
+const itemsPerPage = 3;
 let currentPage = 1;
 let totalPages = 1;
 
@@ -196,7 +196,7 @@ function editCategory(index) {
     const nameInput = document.getElementById('categoryEdit');
     const descriptionInput = document.getElementById('descriptionEdit');
 
-    if (!nameInput || !descriptionInput) {
+    if (!nameInput ) {
         console.error("Edit form fields not found");
         return;
     }
