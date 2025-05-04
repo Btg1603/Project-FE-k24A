@@ -5,18 +5,6 @@ if (authMode === 'login') {
 }
 
 
-logoutButton.addEventListener('click', function () {
-  localStorage.setItem('authMode', 'logout');
-  window.location.href = '/authen_login_logout/';
-});
-
-
-
-
-
-
-
-
 
   // Xử lý đăng xuất
   logoutButton.addEventListener('click', function () {
@@ -26,7 +14,9 @@ logoutButton.addEventListener('click', function () {
       localStorage.removeItem('currentUser');
       window.location.href = '/authen_login_logout/';
     }
+    
   });
+  
 
   // Chặn truy cập khi chưa đăng nhập
   const protectedLinks = document.querySelectorAll('.menu a:not([href*="authen_login_logout"])');

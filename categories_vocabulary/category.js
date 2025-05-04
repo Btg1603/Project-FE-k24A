@@ -189,7 +189,7 @@ function editCategory(index) {
     const editForm = document.getElementById('editForm');
 
     if (!editForm) {
-        console.error("Edit form not found");
+        console.log("Edit form not found");
         return;
     }
 
@@ -197,14 +197,14 @@ function editCategory(index) {
     const descriptionInput = document.getElementById('descriptionEdit');
 
     if (!nameInput ) {
-        console.error("Edit form fields not found");
+        console.log("Edit form fields not found");
         return;
     }
 
     nameInput.value = category?.name || '';
     descriptionInput.value = category?.description || '';
 
-    editForm.dataset.index = index; // Save index to dataset
+    editForm.dataset.index = index; 
 }
 
 
