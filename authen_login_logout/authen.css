@@ -252,4 +252,34 @@ input {
 }
 
 
+body{
+	position:relative;
+}
+.navbar{
+	position:absolute;
+	width:100%;
+	top:30px;
+	left:0;
+}
+a:hover{
+	background-color: #1a75ff;
+	color:#fff;
+	padding:10px;
+	border-radius: 20px;
+}
+a{
+	margin:20px;
+}
+#logout:hover{
+	background-color: rgb(216, 70, 70);
+	color:#fff;
+	border:none;
+}
 
+footer{
+	position:absolute;
+	width:100%;
+	bottom:0;
+	text-align: center;
+	font-size: larger;
+}

@@ -1,6 +1,7 @@
 const signUpButton = document.getElementById('signUp');
 const signInButton = document.getElementById('signIn');
 const container = document.getElementById('container');
+const authMode=localStorage.getItem('authMode');
 
 signUpButton.addEventListener('click', () => {
 	container.classList.add("right-panel-active");
@@ -12,10 +13,13 @@ signInButton.addEventListener('click', () => {
 
 
 
+if(authMode==='login'){
+	const loginForm = document.getElementById('loginForm');
+	loginForm.style.display = 'none';
+}
+
+
 let users = JSON.parse(localStorage.getItem('users') || '[]');
-
-
-
 
 document.getElementById('registerForm').addEventListener('submit', function (e) {
 	e.preventDefault();
@@ -108,7 +112,7 @@ document.getElementById('loginForm').addEventListener('submit', function (e) {
 		} else {
 			document.getElementById('loginError').innerText = 'Email hoặc Password không đúng';
 		}
-	}	
+	}
 });
 
 
@@ -132,4 +136,23 @@ setupTogglePassword("password", "togglePassword1");
 setupTogglePassword("confirmPassword", "togglePassword2");
 setupTogglePassword("loginPassword", "togglePassword3");
 
+// const createAcount=document.getElementById('signUp');
+// const createButton=document.getElementById('create');
+// const authMode = localStorage.getItem('authMode'); 
+// if (authMode === 'login') {
+// 	if(createButton.addEventListener('click',()=>{
 
+// 	}))
+// }
+
+  // Xử lý đăng xuất
+  const logoutButton = document.getElementById('logout');
+  logoutButton.addEventListener('click', function () {
+    const confirmLogout = confirm('Bạn có chắc chắn muốn đăng xuất không?');
+    if (confirmLogout) {
+      localStorage.setItem('authMode', 'logout');
+      localStorage.removeItem('currentUser');
+      window.location.href = '/authen_login_logout/';
+    }
+    
+  });
