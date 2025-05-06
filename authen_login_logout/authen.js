@@ -77,9 +77,10 @@ document.getElementById('registerForm').addEventListener('submit', function (e) 
 		const newUser = { firstName, lastName, email, password };
 		users.push(newUser);
 		localStorage.setItem('users', JSON.stringify(users));
+		localStorage.setItem('userLogining', JSON.stringify(newUser)); 
 		alert('Đăng ký thành công!');
 		localStorage.setItem('authMode', 'login');
-		window.location.href ='/homepage/';
+		window.location.href = '/homepage/';
 	}
 });
 
@@ -107,6 +108,7 @@ document.getElementById('loginForm').addEventListener('submit', function (e) {
 		const user = users.find(user => user.email === email && user.password === password);
 		if (user) {
 			alert('Đăng nhập thành công!');
+			localStorage.setItem('userLogining', JSON.stringify(user));
 			localStorage.setItem('authMode', 'login');
 			window.location.href ='/homepage/';
 		} else {
@@ -151,6 +153,7 @@ setupTogglePassword("loginPassword", "togglePassword3");
     const confirmLogout = confirm('Bạn có chắc chắn muốn đăng xuất không?');
     if (confirmLogout) {
       localStorage.setItem('authMode', 'logout');
+	  localStorage.setItem('userLogining','');
       localStorage.removeItem('currentUser');
       window.location.href = '/authen_login_logout/';
     }

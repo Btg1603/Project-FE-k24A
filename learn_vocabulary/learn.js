@@ -16,7 +16,7 @@
 // // lưu wordList lên local
 // window.localStorage.setItem('wordList', JSON.stringify(wordList));
 
-// Lấy dữ liệu từ local
+//Lấy dữ liệu từ local
 let wordList = JSON.parse(localStorage.getItem('wordList')) || [];
 const wordContainer = document.querySelector("tbody");
 

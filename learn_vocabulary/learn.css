@@ -93,3 +93,67 @@ body {
     color: #888;
     font-size: 0.9rem;
 }
+
+@media (max-width: 575.98px) {
+    .pagination > li > a {
+        font-size: 14px;
+        padding: 0 10px;
+    }
+
+    .navbar {
+        padding: 5px 10px;
+    }
+
+    .navbar-brand img {
+        height: 40px;
+    }
+
+    .menu a {
+        font-size: 14px;
+    }
+
+    .footer {
+        font-size: 0.75rem;
+        text-align: center;
+    }
+}
+
+
+@media (min-width: 576px) and (max-width: 991.98px) {
+    .pagination > li > a {
+        font-size: 16px;
+        padding: 0 20px;
+    }
+
+    .navbar {
+        padding: 8px 15px;
+    }
+
+    .navbar-brand img {
+        height: 45px;
+    }
+
+    .menu a {
+        font-size: 15px;
+    }
+
+    .footer {
+        font-size: 0.85rem;
+    }
+}
+
+
+@media (min-width: 992px) {
+    .pagination > li > a {
+        font-size: 20px;
+        padding: 0 40px;
+    }
+
+    .menu a {
+        font-size: 16px;
+    }
+
+    .footer {
+        font-size: 0.9rem;
+    }
+}
